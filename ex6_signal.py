@@ -1,16 +1,15 @@
-
 from os import fork, wait, kill, getpid
 from signal import pause, signal, SIGUSR1, SIGINT
 import time
 
-def funcUSR1(sig, frame):
+def handlerUSR1(sig, frame):
     print("***Soy el hijo y recibí la señal USR1 de padre***")
 
-def funcINT(sig, frame):
-    print("El usuario ha interrumpido el proceso padre con la señal INT. ¡¡¡Cerrando!!! ")
+def handlerINT(sig, frame):
     pid = getpid()
     killChild(pid)
     time.sleep(2)
+    print("El usuario ha interrumpido el proceso padre con la señal INT. ¡¡¡Cerrando!!! ")
     exit()
 
 def killChild(pid):
@@ -23,8 +22,8 @@ def child():
         pause()
 
 def main():
-    signal(SIGUSR1, funcUSR1)
-    signal(SIGINT, funcINT)
+    signal(SIGUSR1, handlerUSR1)
+    signal(SIGINT, handlerINT)
     pid = fork()
     if pid == 0:
         print("Proceso hijo iniciando:" +str(getpid()))
