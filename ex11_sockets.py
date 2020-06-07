@@ -91,7 +91,7 @@ def main():
 
             print('RESPUESTA DEL SV: ' + respuesta.decode("ascii"))
             sys.exit()
-            
+
         except socket.error:
             print('CODIGO DE ERROR> ' + str(msg[0]) + ' Message ' + msg[1])
             sys.exit()
